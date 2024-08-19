@@ -1,0 +1,23 @@
+.todo-list-container {
+  width: 100%;
+}
+.todo-list-container .list{
+    padding: 5px 15px;
+    background-color: #fff;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+    border-radius: 4px;
+    align-items: center;
+}
+.todo-list-container .list span {
+  list-style: none;
+  font-size: 20px;
+}
+.todo-list-container .buttons button {
+  border: none;
+  margin-right: 5px;
+  border-radius: 5px;
+  font-size: 25px;
+  transition: all 300ms ease-in-out;
+}
