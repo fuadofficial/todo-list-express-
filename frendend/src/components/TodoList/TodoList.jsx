@@ -11,10 +11,10 @@ const TodoList = ({ todos, deleteItem, editItem }) => {
         return (
           <div className="list" key={index}>
             <div className="data">
-              <span>{data.todo}</span>
+              <span>{data.name}</span>
             </div>
             <div className="buttons">
-              <button onClick={() => editItem(index,data.todo)}>
+              <button onClick={() => editItem(index, data.name)}>
                 <FaEdit />
               </button>
               <button onClick={() => deleteItem(index)}>

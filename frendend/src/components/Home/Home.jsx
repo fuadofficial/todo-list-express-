@@ -2,9 +2,6 @@ import { useState, useRef, useEffect } from "react";
 import AddItem from "../AddItem/AddItem";
 import TodoList from "../TodoList/TodoList";
 import "./Home.css";
-import axios from "axios";
-
-const API_URL = "http://localhost:3000/api/todo"
 
 const Home = () => {
     const [inputValue, setInputValue] = useState("");
@@ -13,85 +10,38 @@ const Home = () => {
 
     const inputRef = useRef(null);
 
-
+   
     useEffect(() => {
-        fetchTodo()
-        inputRef.current.focus();
+        const storedTodos = JSON.parse(localStorage.getItem("todos"));
+        if (storedTodos) {
+            setTodos(storedTodos);
+        }
     }, []);
 
+    
     useEffect(() => {
         localStorage.setItem("todos", JSON.stringify(todos));
     }, [todos]);
 
-    const fetchTodo = async () => {
-        const response = await axios(API_URL)
-        try {
-            setTodos(response.data)
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    const addValue = async () => {
-        if (inputValue) {
-            try {
-                const response = await axios(API_URL, {
-                    method: 'POST',
-                    data: {
-                        todo: inputValue
-                    }
-                })
-                setTodos(response.data);
-                setEditIndex(null)
-                setInputValue("");
-            } catch (error) {
-                console.log(error.response.data.message);
-            }
-        } else {
-            alert('Please enter any values')
-        }
-        inputRef.current.focus();
-    };
-
-    const editItem = (index) => {
-        setInputValue(todos[index].name);
-        setEditIndex(index);
-        inputRef.current.focus();
-    };
-
-    // const editItem = async (index) => {
-    //     if (inputValue) {
-    //         try {
-    //             const response = await axios(API_URL, {
-    //                 method: 'PUT',
-    //                 data: {
-    //                     id: index,
-    //                     todo: inputValue,
-    //                     isCompleted: false
-    //                 }
-    //             })
-    //             setTodos(response.data);
-    //             setEditIndex(index);
-    //             setInputValue("");
-    //         } catch (error) {
-    //             console.log(error.response.data.message);
-    //         }
-    //     } else {
-    //         alert('Please update your value')
-    //     }
-    //     inputRef.current.focus();
-    // };
-
-    const deleteItem = (index) => {
-        setTodos(todos.filter((_, item) => item !== index));
-        if (index === editIndex) {
-            setEditIndex(null);
-            setInputValue("");
-        }
-    };
-
     const handleChange = (event) => {
         setInputValue(event.target.value);
+    };
+
+    const addValue = () => {
+        if (inputValue !== "") {
+            if (editIndex !== null) {
+              
+                const updatedTodos = todos.map((todo, index) =>
+                    index === editIndex ? { name: inputValue } : todo
+                );
+                setTodos(updatedTodos);
+                setEditIndex(null);  
+            } else {
+              
+                setTodos([...todos, { name: inputValue }]);
+            }
+            setInputValue("");
+        }
     };
 
     const handleKeyDown = (event) => {
@@ -100,7 +50,19 @@ const Home = () => {
         }
     };
 
+    const deleteItem = (index) => {
+        setTodos(todos.filter((_, item) => item !== index));
+        if (index === editIndex) {
+            setEditIndex(null);  
+            setInputValue("");  
+        }
+    };
 
+    const editItem = (index) => {
+        setInputValue(todos[index].name);
+        setEditIndex(index);
+        inputRef.current.focus();
+    };
 
     return (
         <div className="home-container">
