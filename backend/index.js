@@ -61,7 +61,7 @@ app.delete('/api/todo', (req, res) => {
         return res.json(todoList)
     }
     res.status(404).json({
-        message: `Item : ${id} doesn't exsit`,
+        message: `Item : ${id} , doesn't exsit`,
     })
 })
 
