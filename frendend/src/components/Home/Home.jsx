@@ -53,14 +53,27 @@ const Home = () => {
         inputRef.current.focus();
     };
 
-    const handleChange = (event) => {
-        setInputValue(event.target.value);
-    };
-
-    const handleKeyDown = (event) => {
-        if (event.key === 'Enter') {
-            addValue();
+    const editItem = async (index) => {
+        if (editIndex) {
+            try {
+                const response = await axios(API_URL, {
+                    method: 'PUT',
+                    data: {
+                        id: index,
+                        todo: inputValue,
+                        isCompleted: false
+                    }
+                })
+                setTodos(response.data);
+                setEditIndex(index);
+                setInputValue("");
+            } catch (error) {
+                console.log(error.response.data.message);
+            }
+        } else {
+            alert('Please update your value')
         }
+        inputRef.current.focus();
     };
 
     const deleteItem = (index) => {
@@ -71,11 +84,17 @@ const Home = () => {
         }
     };
 
-    const editItem = (index) => {
-        setInputValue(todos[index].name);
-        setEditIndex(index);
-        inputRef.current.focus();
+    const handleChange = (event) => {
+        setInputValue(event.target.value);
     };
+
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            addValue();
+        }
+    };
+
+
 
     return (
         <div className="home-container">
