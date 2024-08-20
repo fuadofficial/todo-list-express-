@@ -3,6 +3,8 @@ import AddItem from "../AddItem/AddItem";
 import TodoList from "../TodoList/TodoList";
 import "./Home.css";
 
+const API_URL = "http://localhost:3000/api/todo"
+
 const Home = () => {
     const [inputValue, setInputValue] = useState("");
     const [todos, setTodos] = useState([]);
@@ -10,15 +12,16 @@ const Home = () => {
 
     const inputRef = useRef(null);
 
-   
+
     useEffect(() => {
         const storedTodos = JSON.parse(localStorage.getItem("todos"));
         if (storedTodos) {
             setTodos(storedTodos);
         }
+        inputRef.current.focus();
     }, []);
 
-    
+
     useEffect(() => {
         localStorage.setItem("todos", JSON.stringify(todos));
     }, [todos]);
@@ -30,18 +33,19 @@ const Home = () => {
     const addValue = () => {
         if (inputValue !== "") {
             if (editIndex !== null) {
-              
+
                 const updatedTodos = todos.map((todo, index) =>
                     index === editIndex ? { name: inputValue } : todo
                 );
                 setTodos(updatedTodos);
-                setEditIndex(null);  
+                setEditIndex(null);
             } else {
-              
+
                 setTodos([...todos, { name: inputValue }]);
             }
             setInputValue("");
         }
+        inputRef.current.focus();
     };
 
     const handleKeyDown = (event) => {
@@ -53,9 +57,10 @@ const Home = () => {
     const deleteItem = (index) => {
         setTodos(todos.filter((_, item) => item !== index));
         if (index === editIndex) {
-            setEditIndex(null);  
-            setInputValue("");  
+            setEditIndex(null);
+            setInputValue("");
         }
+        inputRef.current.focus();
     };
 
     const editItem = (index) => {
