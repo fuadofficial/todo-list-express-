@@ -14,7 +14,7 @@ const TodoList = ({ todos, deleteItem, editItem }) => {
               <span>{data.todo}</span>
             </div>
             <div className="buttons">
-              <button onClick={() => editItem(index)}>
+              <button onClick={() => editItem(index,data.todo)}>
                 <FaEdit />
               </button>
               <button onClick={() => deleteItem(index)}>

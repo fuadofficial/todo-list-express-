@@ -53,28 +53,34 @@ const Home = () => {
         inputRef.current.focus();
     };
 
-    const editItem = async (index) => {
-        if (editIndex) {
-            try {
-                const response = await axios(API_URL, {
-                    method: 'PUT',
-                    data: {
-                        id: index,
-                        todo: inputValue,
-                        isCompleted: false
-                    }
-                })
-                setTodos(response.data);
-                setEditIndex(index);
-                setInputValue("");
-            } catch (error) {
-                console.log(error.response.data.message);
-            }
-        } else {
-            alert('Please update your value')
-        }
+    const editItem = (index) => {
+        setInputValue(todos[index].name);
+        setEditIndex(index);
         inputRef.current.focus();
     };
+
+    // const editItem = async (index) => {
+    //     if (inputValue) {
+    //         try {
+    //             const response = await axios(API_URL, {
+    //                 method: 'PUT',
+    //                 data: {
+    //                     id: index,
+    //                     todo: inputValue,
+    //                     isCompleted: false
+    //                 }
+    //             })
+    //             setTodos(response.data);
+    //             setEditIndex(index);
+    //             setInputValue("");
+    //         } catch (error) {
+    //             console.log(error.response.data.message);
+    //         }
+    //     } else {
+    //         alert('Please update your value')
+    //     }
+    //     inputRef.current.focus();
+    // };
 
     const deleteItem = (index) => {
         setTodos(todos.filter((_, item) => item !== index));
