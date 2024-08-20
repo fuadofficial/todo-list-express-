@@ -12,11 +12,6 @@ const todoList = [
         todo: 'i phone',
         isCompleted: false,
     },
-    {
-        id: '2',
-        todo: 'vivo',
-        isCompleted: false,
-    },
 ]
 
 app.get('/api/todo', (req, res) => {
@@ -41,18 +36,31 @@ app.post('/api/todo', (req, res) => {
     res.json(todoList)
 });
 
-app.all('*', (req, res) => {
-    res.status(404).json("This page is not found")
-})
 
-// app.put('/api/todo', (req, res) => {
-//     res.json("hy")
-// })
+app.put('/api/todo', (req, res) => {
+    const { id, todo, isCompleted } = req.body
+    const isExist = todoList.find(data => data.id === id)
+    if (isExist) {
+        todoList.forEach((todoItem) => {
+            if (todoItem.todo === todo) {
+                todoItem.todo = todo
+                todoItem.isCompleted = isCompleted || false
+            }
+        })
+        return res.json(todoList)
+    }
+    res.status(404).json({
+        message: `Item with id : ${id} doesn't exsit`,
+    })
+})
 
 // app.delete('/api/todo', (req, res) => {
 //     res.json("hy")
 // })
 
+app.all('*', (req, res) => {
+    res.status(404).json("This page is not found")
+})
 
 const PORT = 3000;
 app.listen(PORT, () => console.log(`server is running on ${PORT}`))
