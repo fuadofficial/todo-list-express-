@@ -26,8 +26,7 @@ app.post('/api/todo', (req, res) => {
         })
         return;
     }
-    const todoItem =
-    {
+    const todoItem = {
         id: uuidv4(),
         todo: todo,
         isCompleted: false
@@ -42,7 +41,7 @@ app.put('/api/todo', (req, res) => {
     const isExist = todoList.find(data => data.id === id)
     if (isExist) {
         todoList.forEach((todoItem) => {
-            if (todoItem.todo === todo) {
+            if (todoItem.id === id) {
                 todoItem.todo = todo
                 todoItem.isCompleted = isCompleted || false
             }
