@@ -14,44 +14,47 @@ const Home = () => {
     const inputRef = useRef(null);
 
 
-    const fetchTodo = async () => {
-        const responce = await axios(API_URL)
-        try {
-            setTodos(responce.data)
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
     useEffect(() => {
         fetchTodo()
         inputRef.current.focus();
     }, []);
 
-
     useEffect(() => {
         localStorage.setItem("todos", JSON.stringify(todos));
     }, [todos]);
 
-    const handleChange = (event) => {
-        setInputValue(event.target.value);
+    const fetchTodo = async () => {
+        const response = await axios(API_URL)
+        try {
+            setTodos(response.data)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const addValue = async () => {
+        if (inputValue) {
+            try {
+                const response = await axios(API_URL, {
+                    method: 'POST',
+                    data: {
+                        todo: inputValue
+                    }
+                })
+                setTodos(response.data);
+                setEditIndex(null)
+                setInputValue("");
+            } catch (error) {
+                console.log(error.response.data.message);
+            }
+        } else {
+            alert('Please enter any values')
+        }
+        inputRef.current.focus();
     };
 
-    const addValue = () => {
-        if (inputValue !== "") {
-            if (editIndex !== null) {
-
-                const updatedTodos = todos.map((todo, index) =>
-                    index === editIndex ? { name: inputValue } : todo
-                );
-                setTodos(updatedTodos);
-                setEditIndex(null);
-            } else {
-
-                setTodos([...todos, { name: inputValue }]);
-            }
-            setInputValue("");
-        }
+    const handleChange = (event) => {
+        setInputValue(event.target.value);
     };
 
     const handleKeyDown = (event) => {
