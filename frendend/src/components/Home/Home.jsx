@@ -2,6 +2,9 @@ import { useState, useRef, useEffect } from "react";
 import AddItem from "../AddItem/AddItem";
 import TodoList from "../TodoList/TodoList";
 import "./Home.css";
+import axios from "axios";
+
+const API_URL = "http://localhost:3000/api/todo"
 
 const Home = () => {
     const [inputValue, setInputValue] = useState("");
@@ -11,11 +14,18 @@ const Home = () => {
     const inputRef = useRef(null);
 
 
-    useEffect(() => {
-        const storedTodos = JSON.parse(localStorage.getItem("todos"));
-        if (storedTodos) {
-            setTodos(storedTodos);
+    const fetchTodo = async () => {
+        const responce = await axios(API_URL)
+        try {
+            setTodos(responce.data)
+        } catch (error) {
+            console.log(error);
         }
+    }
+
+    useEffect(() => {
+        fetchTodo()
+        inputRef.current.focus();
     }, []);
 
 

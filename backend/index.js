@@ -12,6 +12,11 @@ const todoList = [
         todo: 'i phone',
         isCompleted: false,
     },
+    {
+        id: '2',
+        todo: 'realme',
+        isCompleted: true,
+    },
 ]
 
 app.get('/api/todo', (req, res) => {
