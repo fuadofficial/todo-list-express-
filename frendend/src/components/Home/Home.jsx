@@ -35,15 +35,13 @@ const Home = () => {
         try {
             if (inputValue !== "") {
                 if (editIndex !== null) {
-                    // Update existing todo
-                    const updatedTodo = {
-                        id: todos[editIndex].id,
-                        todo: inputValue,
-                        isCompleted: todos[editIndex].isCompleted
-                    };
                     const response = await axios(API_URL, {
                         method: 'PUT',
-                        data: updatedTodo
+                        data: {
+                            id: todos[editIndex].id,
+                            todo: inputValue,
+                            isCompleted: todos[editIndex].isCompleted
+                        }
                     });
                     setTodos(response.data);
                     setEditIndex(null);
@@ -81,10 +79,6 @@ const Home = () => {
                 data: { id: todoId }
             });
             setTodos(response.data);
-            if (index === editIndex) {
-                setEditIndex(null);
-                setInputValue("");
-            }
             inputRef.current.focus();
         } catch (error) {
             console.error(error.response.data.message);
