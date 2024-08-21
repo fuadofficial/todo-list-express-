@@ -37,23 +37,29 @@ const Home = () => {
 
     const addValue = async () => {
         try {
-            if (inputValue) {
-                if(editIndex){
-                    
-                }
-                const response = await axios(API_URL, {
-                    method: "POST",
-                    data: {
+            if (inputValue !== "") {
+                if (editIndex !== null) {
+                    const updatedTodo = {
+                        id: todos[editIndex].id,
+                        todo: inputValue,
+                        isCompleted: todos[editIndex].isCompleted
+                    };
+                    const response = await axios.put(API_URL, updatedTodo);
+                    setTodos(response.data);
+                    setEditIndex(null);
+                } else {
+                    const response = await axios.post(API_URL, {
                         todo: inputValue
-                    }
-                })
+                    });
+                    setTodos(response.data);
+                }
+                setInputValue("");
             } else {
-                alert("Please enter your value!")
+                alert("Please enter a value!");
             }
         } catch (error) {
-            console.log(error);
+            console.error("Error adding todo:", error);
         }
-        setInputValue("");
         inputRef.current.focus();
     };
 

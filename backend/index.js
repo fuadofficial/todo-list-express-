@@ -12,11 +12,6 @@ const todoList = [
         todo: 'i phone',
         isCompleted: false,
     },
-    {
-        id: '2',
-        todo: 'ralme',
-        isCompleted: false,
-    },
 ]
 
 app.get('/api/todo', (req, res) => {
@@ -39,7 +34,6 @@ app.post('/api/todo', (req, res) => {
     todoList.push(todoItem)
     res.json(todoList)
 });
-
 
 app.put('/api/todo', (req, res) => {
     const { id, todo, isCompleted } = req.body
