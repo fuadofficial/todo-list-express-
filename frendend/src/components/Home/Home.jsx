@@ -76,7 +76,8 @@ const Home = () => {
     const deleteItem = async (index) => {
         try {
             const todoId = todos[index].id;
-            const response = await axios.delete(API_URL, {
+            const response = await axios(API_URL, {
+                method: "DELETE",
                 data: { id: todoId }
             });
             setTodos(response.data);
