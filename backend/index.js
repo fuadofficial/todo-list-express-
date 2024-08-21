@@ -19,25 +19,14 @@ app.get('/api/todo', (req, res) => {
 })
 
 app.post('/api/todo', (req, res) => {
-    const { todo, id, isCompleted } = req.body;
-    
-    const requiredAttributes = ["todo", "id", "isCompleted"];
-    const missingAttributes = requiredAttributes.filter(attr => !(attr in req.body));
-    if (missingAttributes.length > 0) {
+    const { todo } = req.body;
+
+    if (!("todo" in req.body)) {
         res.status(400).json({
-            message: `Missing required attributes: ${missingAttributes.join(", ")}`
-        });
+            message: `${JSON.stringify(req.body)}: This attribute is not accepted, Required attribute : todo`
+        })
         return;
     }
-
-    // Proceed with your logic if all required attributes are present
-
-    // if (!("todo" in req.body) && !("id" in req.body) && !("isCompleted" in req.body)) {
-    //     res.status(400).json({
-    //         message: `${JSON.stringify(req.body)}: This attribute is not accepted, Required attribute : todo`
-    //     })
-    //     return;
-    // }
     const todoItem = {
         id: uuidv4(),
         todo: todo,
@@ -47,22 +36,37 @@ app.post('/api/todo', (req, res) => {
     res.json(todoList)
 });
 
+
 app.put('/api/todo', (req, res) => {
-    const { id, todo, isCompleted } = req.body
-    const isExist = todoList.find(data => data.id === id)
-    if (isExist) {
-        todoList.forEach((todoItem) => {
-            if (todoItem.id === id) {
-                todoItem.todo = todo
-                todoItem.isCompleted = isCompleted || false
-            }
-        })
-        return res.json(todoList)
+    const { id, todo, isCompleted } = req.body;
+    // Define required fields
+    const requiredFields = ['id', 'todo', 'isCompleted'];
+    const missingFields = [];
+    // Check for missing fields
+    requiredFields.forEach(field => {
+        if (req.body[field] === undefined || req.body[field] === '') {
+            missingFields.push(field);
+        }
+    });
+    if (missingFields.length) {
+        return res.status(400).json({
+            message: missingFields.map(field => `Field '${field}' is required`).join(', ')
+        });
     }
-    res.status(404).json({
-        message: `Item with id : ${id} doesn't exsit`,
-    })
-})
+    // Find the index of the todo item to update
+    const index = todoList.findIndex((item) => item.id === id);
+    if (index === -1) {
+        return res.status(404).json({
+            message: `Item with id: ${id} doesn't exist.`,
+        });
+    }
+    // Update the todo item
+    todoList[index].todo = todo;
+    todoList[index].isCompleted = isCompleted;
+
+    res.status(200).json(todoList);
+});
+
 
 app.delete('/api/todo', (req, res) => {
     const { id } = req.body;
