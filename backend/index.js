@@ -19,13 +19,25 @@ app.get('/api/todo', (req, res) => {
 })
 
 app.post('/api/todo', (req, res) => {
-    const { todo } = req.body;
-    if (!("todo" in req.body)) {
+    const { todo, id, isCompleted } = req.body;
+    
+    const requiredAttributes = ["todo", "id", "isCompleted"];
+    const missingAttributes = requiredAttributes.filter(attr => !(attr in req.body));
+    if (missingAttributes.length > 0) {
         res.status(400).json({
-            message: `${JSON.stringify(req.body)}: This attribute is not accepted, Required attribute : todo`
-        })
+            message: `Missing required attributes: ${missingAttributes.join(", ")}`
+        });
         return;
     }
+
+    // Proceed with your logic if all required attributes are present
+
+    // if (!("todo" in req.body) && !("id" in req.body) && !("isCompleted" in req.body)) {
+    //     res.status(400).json({
+    //         message: `${JSON.stringify(req.body)}: This attribute is not accepted, Required attribute : todo`
+    //     })
+    //     return;
+    // }
     const todoItem = {
         id: uuidv4(),
         todo: todo,
