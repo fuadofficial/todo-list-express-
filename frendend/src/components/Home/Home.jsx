@@ -35,20 +35,25 @@ const Home = () => {
         setInputValue(event.target.value);
     };
 
-    const addValue = () => {
-        if (inputValue !== "") {
-            if (editIndex !== null) {
-                const updatedTodos = todos.map((todo, index) =>
-                    index === editIndex ? { name: inputValue } : todo
-                );
-                setTodos(updatedTodos);
-                setEditIndex(null);
+    const addValue = async () => {
+        try {
+            if (inputValue) {
+                if(editIndex){
+                    
+                }
+                const response = await axios(API_URL, {
+                    method: "POST",
+                    data: {
+                        todo: inputValue
+                    }
+                })
             } else {
-
-                setTodos([...todos, { name: inputValue }]);
+                alert("Please enter your value!")
             }
-            setInputValue("");
+        } catch (error) {
+            console.log(error);
         }
+        setInputValue("");
         inputRef.current.focus();
     };
 
@@ -68,7 +73,7 @@ const Home = () => {
     };
 
     const editItem = (index) => {
-        setInputValue(todos[index].name);
+        setInputValue(todos[index].todo);
         setEditIndex(index);
         inputRef.current.focus();
     };
