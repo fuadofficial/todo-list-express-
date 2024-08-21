@@ -18,10 +18,6 @@ const Home = () => {
         inputRef.current.focus();
     }, []);
 
-    useEffect(() => {
-        localStorage.setItem("todos", JSON.stringify(todos));
-    }, [todos]);
-
     const fetchTodo = async () => {
         try {
             const response = await axios(API_URL)
@@ -39,17 +35,25 @@ const Home = () => {
         try {
             if (inputValue !== "") {
                 if (editIndex !== null) {
+                    // Update existing todo
                     const updatedTodo = {
                         id: todos[editIndex].id,
                         todo: inputValue,
                         isCompleted: todos[editIndex].isCompleted
                     };
-                    const response = await axios.put(API_URL, updatedTodo);
+                    const response = await axios(API_URL, {
+                        method: 'PUT',
+                        data: updatedTodo
+                    });
                     setTodos(response.data);
                     setEditIndex(null);
                 } else {
-                    const response = await axios.post(API_URL, {
-                        todo: inputValue
+                    // Add new todo
+                    const response = await axios(API_URL, {
+                        method: 'POST',
+                        data: {
+                            todo: inputValue
+                        }
                     });
                     setTodos(response.data);
                 }
@@ -58,7 +62,7 @@ const Home = () => {
                 alert("Please enter a value!");
             }
         } catch (error) {
-            console.error("Error adding todo:", error);
+            console.error(error.response?.data?.message || "An error occurred");
         }
         inputRef.current.focus();
     };
@@ -69,13 +73,21 @@ const Home = () => {
         }
     };
 
-    const deleteItem = (index) => {
-        setTodos(todos.filter((_, item) => item !== index));
-        if (index === editIndex) {
-            setEditIndex(null);
-            setInputValue("");
+    const deleteItem = async (index) => {
+        try {
+            const todoId = todos[index].id;
+            const response = await axios.delete(API_URL, {
+                data: { id: todoId }
+            });
+            setTodos(response.data);
+            if (index === editIndex) {
+                setEditIndex(null);
+                setInputValue("");
+            }
+            inputRef.current.focus();
+        } catch (error) {
+            console.error(error.response.data.message);
         }
-        inputRef.current.focus();
     };
 
     const editItem = (index) => {
