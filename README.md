@@ -2,7 +2,9 @@
 
 
 
+
 A simple yet powerful to-do list application built with React, Node, and Express, where all your tasks are securely stored in a backend file.
+
 
 
 
@@ -45,7 +47,9 @@ Backend: Node.js, Express
 
 
 
+
 Storage: File-based storage on the backend
+
 
 
 
