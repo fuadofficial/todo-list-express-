@@ -9,19 +9,18 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
-        const { todo,isCompleted } = req.body;
+        // const { todo } = req.body;
 
         // Check if the required "todo" field exists in the request body
-        if (!todo) {
-            return res.status(400).json({
-                message: `Invalid request: Required attribute "todo" is missing.`,
-            });
-        }
 
-        const todoItem = { todo, isCompleted }
+        // if (!todo) {
+        //     return res.status(400).json({
+        //         message: `Invalid request: Required attribute "todo" is missing.`,
+        //     });
+        // }
 
         // Create a new todo item in the database
-        await Todo.create(todoItem);
+        await Todo.create(req.body);
 
         res.status(201).json('Todo item added successfully');
     } catch (error) {
