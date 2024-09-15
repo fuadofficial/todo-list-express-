@@ -10,14 +10,17 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
+        const { todo } = req.body
 
-        const newTodo = await Todo.create(req.body);
-
-        if (newTodo) {
-            return res.status(201).json('Todo item added successfully');
+        const todoItem = {
+            todo: todo,
+            isCompleted: false
         }
 
-        res.status(404).json('Todo item not found')
+        await Todo.create(todoItem);
+        const allTodos = await Todo.find()
+
+        res.status(200).json(allTodos);
 
     } catch (error) {
         res.status(400).json({
@@ -38,7 +41,8 @@ router.put('/', async (req, res) => {
         const updateData = await Todo.findByIdAndUpdate(_id, fieldToUpdate, { new: true })
 
         if (updateData) {
-            return res.status(200).json(updateData)
+            const allTodos = await Todo.find()
+            return res.status(200).json(allTodos)
         }
 
         res.status(400).json({
@@ -59,9 +63,8 @@ router.delete('/', async (req, res) => {
         const deletedField = await Todo.findByIdAndDelete(_id)
 
         if (deletedField) {
-            return res.status(200).json({
-                message: "Deleted Successfully"
-            });
+            const allTodos = await Todo.find()
+            return res.status(200).json(allTodos);
         }
         res.status(404).json({
             message: `Item : ${id} , doesn't exist for delete`,

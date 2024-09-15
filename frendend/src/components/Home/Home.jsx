@@ -38,7 +38,7 @@ const Home = () => {
                     const response = await axios(API_URL, {
                         method: 'PUT',
                         data: {
-                            id: todos[editIndex].id,
+                            _id: todos[editIndex]._id,
                             todo: inputValue,
                             isCompleted: todos[editIndex].isCompleted
                         }
@@ -73,10 +73,10 @@ const Home = () => {
 
     const deleteItem = async (index) => {
         try {
-            const todoId = todos[index].id;
+            const todoId = todos[index]._id;
             const response = await axios(API_URL, {
                 method: "DELETE",
-                data: { id: todoId }
+                data: { _id: todoId }
             });
             setTodos(response.data);
             inputRef.current.focus();
