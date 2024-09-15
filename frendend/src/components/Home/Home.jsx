@@ -2,6 +2,8 @@ import { useState, useRef, useEffect } from "react";
 import AddItem from "../AddItem/AddItem";
 import TodoList from "../TodoList/TodoList";
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import "./Home.css";
 
 const API_URL = "http://localhost:3000/api/todo"
@@ -82,6 +84,7 @@ const Home = () => {
             inputRef.current.focus();
         } catch (error) {
             console.error(error.response.data.message);
+            toast(error.response.data.message);
         }
     };
 
@@ -110,6 +113,19 @@ const Home = () => {
                     <TodoList todos={todos} deleteItem={deleteItem} editItem={editItem} />
                 </div>
             </div>
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss={false}
+                draggable={false}
+                pauseOnHover={false}
+                theme="light"
+                transition:Bounce
+            />
         </div>
     );
 };
