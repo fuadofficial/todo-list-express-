@@ -21,7 +21,7 @@ Persistent Storage: All to-do data is stored in a backend file, ensuring your ta
 
 
 
-Real-time Updates: The UI automatically reflects changes as you manage your ടാസ്ക്സ്
+Real-time Updates: The UI automatically reflects changes as you manage your tasks
 
 
 
