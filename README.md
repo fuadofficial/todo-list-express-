@@ -1,4 +1,4 @@
-✅ To-Do List Project
+# ✅ To-Do List Project
 
 
 A simple yet powerful to-do list application built with React, Node, and Express, where all your tasks are securely stored in a backend file.
@@ -6,7 +6,7 @@ A simple yet powerful to-do list application built with React, Node, and Express
 
 
 
-🚀 Features
+## 🚀 Features
 
 
 
@@ -21,7 +21,7 @@ Persistent Storage: All to-do data is stored in a backend file, ensuring your ta
 
 
 
-Real-time Updates: The UI automatically reflects changes as you manage your ടാസ്ക്സ്
+Real-time Updates: The UI automatically reflects changes as you manage your tasks
 
 
 
@@ -32,7 +32,7 @@ Responsive Design: Fully responsive, providing a smooth experience across all de
 
 
 
-🛠️ Tech Stack
+## 🛠️ Tech Stack
 Frontend: React
 
 
@@ -47,7 +47,7 @@ Backend: Node.js, Express
 Storage: File-based storage on the backend
 
 
-video: 
+## video: 
 
 
 
