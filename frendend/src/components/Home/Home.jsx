@@ -6,7 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import "./Home.css";
 
-const API_URL = "http://localhost:3000/api/todo"
+const API_URL = "https://todo-list-express-147g-lgu3ibwmp-ahmad-fuads-projects.vercel.app/api/todo"
 
 const Home = () => {
     const [inputValue, setInputValue] = useState("");
@@ -84,7 +84,7 @@ const Home = () => {
             inputRef.current.focus();
         } catch (error) {
             console.error(error.response.data.message);
-            toast(error.response.data.message);
+            toast.error(error.response.data.message);
         }
     };
 
