@@ -18,7 +18,6 @@ router.post('/', async (req, res) => {
         }
 
         const createTodo = await Todo.create(todoItem);
-        // const allTodos = await Todo.find()
 
         res.status(200).json(createTodo);
 

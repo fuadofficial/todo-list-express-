@@ -6,7 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import "./Home.css";
 
-const API_URL = "http://localhost:3000/api/todo"
+const API_URL = "http://localhost:4000/api/todo"
 
 const Home = () => {
     const [inputValue, setInputValue] = useState("");
