@@ -5,22 +5,18 @@ const connectDb = require('./config/db');
 const router = require('./router/todo');
 require('dotenv').config();
 
-app.use(cors({
-    [origin:https://todo-list-r9ae.vercel.app/],
-        method["POST","GET","PUT","DELETE"],
-    credentials:true
-}));
+app.use(cors());
 app.use(express.json());
 
 connectDb();
 
-app.use('/api/todo',router)
+app.use('/api/todo', router)
 
 app.all('*', (req, res) => {
     res.status(404).json("This page is not found");
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`server running on ${PORT}`));
+app.listen(PORT, () => console.log(`server running on http://localhost/${PORT}`));
 
 
