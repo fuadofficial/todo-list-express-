@@ -1,9 +1,18 @@
 
 # ✅ To-Do List Project
+
+
+
+
+![Screenshot (2)](https://github.com/user-attachments/assets/15d8c18a-4dcc-476d-b613-585a846abb49)
+
+
+
+
+
 A feature-rich and responsive To-Do List Application built using the MERN stack (MongoDB, Express, React, Node.js). This project simplifies task management with real-time updates, persistent storage, and a user-friendly interface.
 
-## 🎥 Video Demo
-https://github.com/user-attachments/assets/e02b8870-da91-43cf-bd80-e984f5aeae1d
+
 
 ## 🚀 Features
 ## 📝 Task Management
