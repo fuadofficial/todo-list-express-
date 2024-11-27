@@ -4,7 +4,6 @@ const Todo = require('../model/todoModel')
 
 router.get('/', async (req, res) => {
     const todoList = await Todo.find().select('todo isCompleted ');
-
     res.status(200).json(todoList);
 });
 

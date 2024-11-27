@@ -83,7 +83,7 @@ const Home = () => {
             await axios.delete(API_URL, {
                 data: { _id: todoId },
             });
-            setTodos((prevTodos) => prevTodos.filter((_, i) => i !== index));
+            setTodos((prevTodos) => prevTodos.filter((_, id) => id !== index));
             inputRef.current.focus();
             toast.success("Task deleted successfully!");
         } catch (error) {

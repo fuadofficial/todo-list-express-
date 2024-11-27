@@ -4,7 +4,7 @@
 
 .todo-list-container .list {
   padding: 10px 20px;
-  background: #f9f9f9;
+  background: #d1ebf6;
   display: flex;
   justify-content: space-between;
   margin: 10px 0;
@@ -15,8 +15,7 @@
 }
 
 .todo-list-container .list:hover {
-  transform: scale(1.02);
-  background: #f0f4ff;
+  background: #ebf5f9;
 }
 
 .todo-list-container .list span {
