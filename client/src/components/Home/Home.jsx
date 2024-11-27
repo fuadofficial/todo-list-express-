@@ -80,15 +80,14 @@ const Home = () => {
     const deleteItem = async (index) => {
         try {
             const todoId = todos[index]._id;
-            const response = await axios(API_URL, {
-                method: "DELETE",
-                data: { _id: todoId }
+            await axios.delete(API_URL, {
+                data: { _id: todoId },
             });
-            setTodos(response.data);
+            setTodos((prevTodos) => prevTodos.filter((_, i) => i !== index));
             inputRef.current.focus();
+            toast.success("Task deleted successfully!");
         } catch (error) {
-            console.error(error.response.data.message);
-            toast.error(error.response.data.message);
+            toast.error(error.response?.data?.message || "Failed to delete the task.");
         }
     };
 

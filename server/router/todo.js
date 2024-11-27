@@ -40,8 +40,7 @@ router.put('/', async (req, res) => {
         const updateData = await Todo.findByIdAndUpdate(_id, fieldToUpdate, { new: true })
 
         if (updateData) {
-            const allTodos = await Todo.find()
-            return res.status(200).json(allTodos)
+            return res.status(200).json(updateData)
         }
 
         res.status(400).json({
@@ -62,8 +61,8 @@ router.delete('/', async (req, res) => {
         const deletedField = await Todo.findByIdAndDelete(_id)
 
         if (deletedField) {
-            const allTodos = await Todo.find()
-            return res.status(200).json(allTodos);
+            // const allTodos = await Todo.find()
+            return res.status(200).json(deletedField);
         }
         res.status(404).json({
             message: `Item : ${id} , doesn't exist for delete`,
