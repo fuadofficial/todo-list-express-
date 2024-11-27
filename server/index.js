@@ -6,12 +6,15 @@ const router = require('./router/todo');
 require('dotenv').config();
 
 const corsOptions = {
-    origin: 'https://todo-list-r9ae.vercel.app', // Replace with your frontend URL
+    origin: 'https://todo-list-r9ae.vercel.app',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true, 
+    allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
+
 app.use(cors(corsOptions));
+
 app.use(express.json());
 
 connectDb();
