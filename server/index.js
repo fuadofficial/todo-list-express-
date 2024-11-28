@@ -5,15 +5,7 @@ const connectDb = require('./config/db');
 const router = require('./router/todo');
 require('dotenv').config();
 
-const corsOptions = {
-    origin: ['https://todo-list-r9ae.vercel.app/'],
-    methods: 'GET,POST,PUT,DELETE',
-    credentials: true,
-};
-
-app.use(cors(corsOptions));
-
-
+app.use(cors());
 
 app.use(express.json());
 
