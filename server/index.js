@@ -5,10 +5,8 @@ const connectDb = require('./config/db');
 const router = require('./router/todo');
 require('dotenv').config();
 
-const cors = require("cors");
-app.use(cors({ origin: "https://todo-list-2y5z.vercel.app/" }));
-
 app.use(express.json());
+app.use(cors());
 
 connectDb();
 
@@ -20,5 +18,3 @@ app.all('*', (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`server running on http://localhost/${PORT}`));
-
-
